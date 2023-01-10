@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import platform
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'CatOnClouds'
+    'CatOnClouds',
+    'login'
 ]
 
 MIDDLEWARE = [
@@ -116,6 +118,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+sysstr = platform.system()
+HOME_PATH = ""
+if sysstr == "linux":
+    HOME_PATH = os.environ['HOME']
+elif sysstr == "Windows":
+    HOME_PATH = os.environ['TEMP']
+else:
+    HOME_PATH = os.path.dirname(BASE_DIR)
+print("HOME PATH:", HOME_PATH)
+USER_ROOT = os.path.join(HOME_PATH, "USER")
+if not os.path.exists(USER_ROOT):
+    os.mkdir(USER_ROOT)
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
@@ -124,6 +138,8 @@ STATICFILES_DIRS = [
     ("adminlte", os.path.join(STATIC_ROOT, 'theme')),
     ("js", os.path.join(STATIC_ROOT, 'js')),
 ]
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(USER_ROOT)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

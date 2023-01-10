@@ -13,11 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, include
+from django.urls import re_path as url
+
+from CatOnClouds.settings import MEDIA_URL, MEDIA_ROOT
 from CatOnClouds.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^$', home_page, name='home_page'),
-]
+    url(r'^$', home_page, name='home_page'),
+    path('login/', include('login.urls', namespace="login")),
+] + static(MEDIA_URL, document_root=MEDIA_ROOT)

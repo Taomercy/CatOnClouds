@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <title>Profile Display</title>
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+
+        <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Profile</h3>
+              </div>
+              <div class="card-body">
+                  <div class=mb-3">
+                    <img src="/media/{{ user.id }}/avatar.png" class="img-circle elevation-2" alt="User Image" width="300" height="300">
+                  </div>
+                  <div class="mb-3"></div>
+                  <form enctype="multipart/form-data" method="post" action="{% url 'login:new_avatar' %}">
+                      <div class="mb-3">
+                          <input type="file" name="new_avatar">
+                          <input type="submit" value="Save Avatar" class="btn btn-sm btn-info">
+                      </div>
+                  </form>
+                <form action="{% url 'login:profile' %}" method="post">
+                    <div class="input-group mb-3">
+                      <input name="email" type="email" class="form-control" placeholder="{{ user.email }}">
+                    </div>
+                    <div class="input-group mb-3">
+                      <input name="name" type="text" class="form-control" placeholder="{{ user.name }}">
+                    </div>
+                    <div class="row">
+                        <button type="submit" class="btn btn-primary btn-block" style="float:right">Save</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+      </div>
+    </div>
+    </div>
+{% endblock %}
