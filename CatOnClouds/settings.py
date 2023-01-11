@@ -118,16 +118,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-sysstr = platform.system()
+sysstr = platform.system().lower()
 HOME_PATH = ""
 if sysstr == "linux":
-    HOME_PATH = os.environ['HOME']
-elif sysstr == "Windows":
+    HOME_PATH = "/data/CatOnClouds"
+elif sysstr == "windows":
     HOME_PATH = os.environ['TEMP']
 else:
     HOME_PATH = os.path.dirname(BASE_DIR)
 print("HOME PATH:", HOME_PATH)
-USER_ROOT = os.path.join(HOME_PATH, "USER")
+USER_ROOT = os.path.join(HOME_PATH, "user")
 if not os.path.exists(USER_ROOT):
     os.mkdir(USER_ROOT)
 
