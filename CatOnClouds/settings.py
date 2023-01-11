@@ -20,7 +20,9 @@ sysstr = platform.system().lower()
 HOME_PATH = ""
 if sysstr == "linux":
     HOME_PATH = "/data/CatOnClouds"
-    DATABASE_DIR = HOME_PATH
+    DATABASE_DIR = os.path.join(HOME_PATH, "database")
+    if not os.path.exists(DATABASE_DIR):
+        os.mkdir(DATABASE_DIR)
 elif sysstr == "windows":
     HOME_PATH = os.environ['TEMP']
 else:
