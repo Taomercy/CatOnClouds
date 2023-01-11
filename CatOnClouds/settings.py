@@ -15,6 +15,22 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+DATABASE_DIR = BASE_DIR
+sysstr = platform.system().lower()
+HOME_PATH = ""
+if sysstr == "linux":
+    HOME_PATH = "/data/CatOnClouds"
+    DATABASE_DIR = HOME_PATH
+elif sysstr == "windows":
+    HOME_PATH = os.environ['TEMP']
+else:
+    HOME_PATH = os.path.dirname(BASE_DIR)
+print("HOME PATH:", HOME_PATH)
+USER_ROOT = os.path.join(HOME_PATH, "user")
+if not os.path.exists(USER_ROOT):
+    os.mkdir(USER_ROOT)
+
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -80,7 +96,7 @@ WSGI_APPLICATION = 'CatOnClouds.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DATABASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -118,23 +134,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-sysstr = platform.system().lower()
-HOME_PATH = ""
-if sysstr == "linux":
-    HOME_PATH = "/data/CatOnClouds"
-elif sysstr == "windows":
-    HOME_PATH = os.environ['TEMP']
-else:
-    HOME_PATH = os.path.dirname(BASE_DIR)
-print("HOME PATH:", HOME_PATH)
-USER_ROOT = os.path.join(HOME_PATH, "user")
-if not os.path.exists(USER_ROOT):
-    os.mkdir(USER_ROOT)
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = [
-    # os.path.join(STATIC_ROOT, 'AdminLTE_3_0_5'),
     ("adminlte", os.path.join(STATIC_ROOT, 'theme')),
     ("js", os.path.join(STATIC_ROOT, 'js')),
 ]
