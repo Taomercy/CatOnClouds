@@ -5,7 +5,7 @@ metadata:
   labels:
     app: cat-on-clouds
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: cat-on-clouds
@@ -16,14 +16,32 @@ spec:
     spec:
       containers:
       - name: cat-on-clouds
-        image: cat-on-clouds:latest
+        image: taomercy/cat-on-clouds:latest
+        imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 80
+        - containerPort: 23614
         volumeMounts:
         - mountPath: /data/CatOnClouds
-          name: test-volume
+          name: cloud-volume
       volumes:
-      - name: test-volume
+      - name: cloud-volume
         hostPath:
           path: /data/CatOnClouds
           type: Directory
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cat-on-clouds-svc
+  labels:
+    app: cat-on-clouds
+spec:
+  type: NodePort
+  selector:
+    app: cat-on-clouds
+  ports:
+    - protocol: TCP
+      port: 23614
+      targetPort: 23614
+      nodePort: 32764
