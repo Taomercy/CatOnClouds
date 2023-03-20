@@ -22,8 +22,8 @@ spec:
         volumeMounts:
         - mountPath: /data/CatOnClouds
           name: test-volume
-    volumes:
-    - name: test-volume
-      hostPath:
-        path: /data/CatOnClouds
-        type: Directory
+      volumes:
+      - name: test-volume
+        hostPath:
+          path: /data/CatOnClouds
+          type: Directory
