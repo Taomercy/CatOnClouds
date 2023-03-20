@@ -22,15 +22,15 @@ if sysstr == "linux":
     HOME_PATH = "/data/CatOnClouds"
     DATABASE_DIR = os.path.join(HOME_PATH, "database")
     if not os.path.exists(DATABASE_DIR):
-        os.mkdir(DATABASE_DIR)
+        os.makedirs(DATABASE_DIR)
 elif sysstr == "windows":
-    HOME_PATH = os.environ['TEMP']
+    HOME_PATH = "D:\\"
 else:
     HOME_PATH = os.path.dirname(BASE_DIR)
 print("HOME PATH:", HOME_PATH)
 USER_ROOT = os.path.join(HOME_PATH, "user")
 if not os.path.exists(USER_ROOT):
-    os.mkdir(USER_ROOT)
+    os.makedirs(USER_ROOT)
 
 
 # Quick-start development settings - unsuitable for production

@@ -117,8 +117,10 @@ def new_avatar(request):
     user = User.objects.get(email=request.session['email'])
     new_avatar = request.FILES.get("new_avatar", None)
     filename = "avatar.png"
-    save_path = os.path.join(USER_ROOT, str(user.id), filename)
-    with open(save_path, "wb") as fw:
+    save_path = os.path.join(USER_ROOT, str(user.id))
+    if not os.path.exists(save_path):
+        os.mkdir(save_path)
+    with open(os.path.join(save_path, filename), "wb") as fw:
         for c in new_avatar.chunks():
             fw.write(c)
     return render(request, 'login/profile.html', locals())
